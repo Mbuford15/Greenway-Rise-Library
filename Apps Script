@@ -1,0 +1,82 @@
+//This code applies to the apps script function connected to the Google Sheet
+
+function removeDuplicates() {
+ var sheet = SpreadsheetApp.getActiveSheet();
+ //pulls all book data from spreadsheet
+ var rng_all = sheet.getRange("A1:P100");
+ var data_all = rng_all.getValues();
+ var newData = new Array();
+
+ //loops through all of the bpook titles and compares the info in cells --> looks for duplicates
+  for(i in data_all){
+
+ 
+   var col = data_all[i];
+   var duplicate = false;
+
+    for(j in newData){
+
+      if(data_all[i][0] == newData[j][0]){
+        //console.log(newData[j][13])
+       //checks if total books matches avaliable books 
+
+        //replaces new info turned in by the form with the old status for a book
+
+        
+
+          if(newData[j][12] != 0){
+
+            if(data_all[i][15] == "InStock" ){
+
+              //newData[j].splice(14,1,newData[j][14] - data_all[i][14])
+
+              newData[j][14] = newData[j][14].replace(data_all[i][14], "")
+
+              newData[j][14] = newData[j][14].replace(", ", "")
+              //console.log(newData[j][14].replace(data_all[i][14], "i"))
+
+              newData[j][12] = newData[j][12] - 1
+            }
+          }
+          
+          if(newData[j][12] != newData[j][13]){
+
+            if(data_all[i][15] == "Check_out" ){    
+
+              console.log(1)
+              if(newData[j][12] == 0){
+                newData[j].splice(14,1,newData[j][14] + data_all[i][14])               
+              } else{
+                newData[j].splice(14,1,newData[j][14] + ", " + data_all[i][14])
+              }
+              
+              newData[j][12] = newData[j][12] + 1
+           }
+
+          } 
+
+        //newData[j].splice(14,1,data_all[i][14])
+
+        newData[j].splice(15,1,data_all[i][15])
+
+        duplicate = true;
+    
+      }
+
+    }
+
+    //deletes form data after replacing book status and name of person
+
+    if(!duplicate){
+     newData.push(col);
+
+    }
+  }
+
+ //sets the sheets to match the newData aray
+
+ sheet.getRange(1,1, newData.length, 
+ newData[0].length).setValues(newData);
+}
+
+
