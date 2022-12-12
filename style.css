@@ -19,7 +19,8 @@ html, body {
     border-color: gold; 
     /* used for the books thing */
   }
-
+  
+   /* the image that takes you back to the homepage on the books, checkout, and return pages*/
   .img-top-left:hover {
     cursor: pointer;
   }
