@@ -1,0 +1,406 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    padding: 0%;
+    margin: 0%;
+    background-color: #793140;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  a{
+    padding: 3px;
+    color: white;
+  }
+
+  a:visited {
+    color: white;
+  }
+
+  hr {
+    border-color: gold; 
+    /* used for the books thing */
+  }
+
+  .img-top-left:hover {
+    cursor: pointer;
+  }
+
+/* front page css ---------------------------------------------------------------------*/
+
+  #all-front-div {
+   display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 50px 150px 300px;
+  }
+  #title-front-div {
+  /*   background-color:red; */
+    grid-row: 2/3;
+    grid-column: 1/2;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 400px 1fr;
+  }
+  #front-page-title {
+  /*   background-color: green;  */
+    justify-self: center;
+    bottom: 50px;
+    grid-row: 1/2;
+    grid-column: 2/3;
+    color: #ebebeb;
+  }
+  a:link {
+    background-color: #7f3443;
+    text-decoration: none;
+    border: 1px black solid;
+    color: black;
+  }
+  #contains-redirections-front-div { 
+    display: grid;
+    grid-column: 1/2;
+    grid-row: 3/4;
+    grid-template-columns: 1fr 300px 1fr;
+    grid-template-rows: 300px;
+  }
+  #front-link-left {
+    position: relative;
+    border-color: white;
+    color: white;
+    top: 4px;
+  }
+  #front-link-right {
+    float: right;
+    border-color: white;
+    color: white;
+  }
+  #redirections-front {
+  /*   background-color: yellow;  */
+    grid-row: 1/2;
+    grid-column: 2/3;
+  }
+/* All Books Page -------------------------------------------------------------------------------- */
+  #book-all {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 200px 1fr;
+  }
+
+  #books-top {
+    grid-row: 1/2;
+    grid-column: 1/2;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 100px 100px;
+  }
+
+  #books-stab-logo {
+    position: absolute;
+    float: left;
+    width: 100px;
+    height: 100px;
+  }
+  #books-title {
+    grid-row: 1/2;
+    grid-column: 1/2;
+    justify-self: center;
+    color: white;
+  }
+
+  #books-search {
+    grid-column: 1/2;
+    grid-row: 2/3;
+    color: white;
+  }
+
+  #searching-for-books {
+    margin-top: 5px;
+  }
+
+  #div-books {
+    grid-row: 2/3;
+    grid-column: 1/2;
+    border: 1px gold solid;
+    text-align: center;
+    width: 50vw;
+    justify-self: center;
+    color: white;
+  }
+
+  #books-search {
+    width: 50vw;
+    justify-self: center;
+  }
+
+  .check-out-button {
+    background-color: #793140;
+    color: white;
+    border: 1px solid white;
+    cursor: pointer;
+  }
+
+  #searching-div {
+    display: flex;
+    justify-content: center;
+  }
+
+  #searching-for-books {
+    width: 100px;
+    height: 12px;
+    margin-left: 5px;
+    margin-top: 2px;
+  }
+
+  #genre-div {
+    display: flex;
+    justify-content: center;
+  }
+/* Check Out Books Page -------------------------------------------------------------------- */
+
+#check-out-all {
+  display: none;
+  grid-template-columns: 1fr;
+  grid-template-rows: 100px 1fr;
+}
+
+#checkOut-stab-logo {
+  position: absolute;
+  float: left;
+  height: 100px;
+  width: 100px;
+}
+
+#check-out-body { 
+  grid-row: 2/3; 
+  grid-column: 1/2; 
+  display: grid;
+  grid-template-columns: 1fr 30vw 1fr;
+  grid-template-rows: 1fr;
+  color: white;
+}
+
+#check-out-body-center {
+  grid-row: 1/2;
+  grid-column: 2/3;
+  justify-self: center;
+  position: absolute;
+  width: 30vw;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+#check-out-title {
+  display: flex;
+  justify-content: center;
+  font-weight: lighter;
+  color: white;
+}
+
+#check-out-form-container {
+  justify-content: center;
+}
+
+.check-out-inputs {
+  border: 1px solid white;
+  background-color: #793140;
+  outline: none;
+  color: white;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 30vw;
+  height: 25px;
+}
+
+#check-out-radio {
+  display: none;
+}
+
+#check-out-book-button {
+  color: white;
+  background-color: #793140;
+  border-color: white;
+  width: 30vw;
+  height: 30px;
+  border-radius: 10px;
+}
+
+#check-out-tick-mark {
+  display: none;
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+}
+
+#check-out-tick-mark::before {
+display: none;
+position: absolute;
+left: 0;
+top: 50%;
+height: 50%;
+width: 3px;
+background-color: greenyellow;
+content: "";
+transform: translateX(10px) rotate(-45deg);
+transform-origin: left bottom;
+}
+
+#check-out-tick-mark::after {
+display: none;
+position: absolute;
+left: 0;
+bottom: 0;
+height: 3px;
+width: 100%;
+background-color: greenyellow;
+content: "";
+transform: translateX(10px) rotate(-45deg);
+transform-origin: left bottom;
+}
+
+#check-out-cross-mark {
+display: none;
+height: 50px;
+width: 50px;
+border-radius: 5px;
+position: relative;
+}
+
+#check-out-cross-mark:after {
+display: none;
+position: absolute;
+top: 0;
+bottom: 0;
+left: 0;
+right: 0;
+content: "\274c"; /* use the hex value here... */
+font-size: 25px; 
+color: #FFF;
+line-height: 50px;
+text-align: center;
+}
+
+/* Return Books Page ----------------------------------------------------------------------------------- */
+/* based on the https://dribbble.com/shots/14213751-Welcome-Back*/
+  #return-all {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 100px 1fr;
+  }
+
+  #back-logo {
+    float: left;
+    width: 100px;
+    height: 100px;
+  }
+
+  #return-body { 
+    grid-row: 2/3; 
+    grid-column: 1/2; 
+    display: grid;
+    grid-template-columns: 1fr 30vw 1fr;
+    grid-template-rows: 1fr;
+    color: white;
+  }
+
+  #return-body-center {
+    grid-row: 1/2;
+    grid-column: 2/3;
+    justify-self: center;
+    position: absolute;
+    width: 30vw;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+  #return-title {
+    display: flex;
+    justify-content: center;
+    font-weight: lighter;
+    color: white;
+  }
+
+  #return-form-container {
+    justify-content: center;
+  }
+
+  .return-inputs {
+    border: 1px solid white;
+    background-color: #793140;
+    outline: none;
+    color: white;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 30vw;
+    height: 25px;
+  }
+
+  #return-radio {
+    display: none;
+  }
+
+  #returning-book-button {
+    color: white;
+    background-color: #793140;
+    border-color: white;
+    width: 30vw;
+    height: 30px;
+    background-color:#793140;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  #return-tick-mark {
+    display: none;
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+  }
+
+#return-tick-mark::before {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 50%;
+  width: 3px;
+  background-color: greenyellow;
+  content: "";
+  transform: translateX(10px) rotate(-45deg);
+  transform-origin: left bottom;
+}
+
+#return-tick-mark::after {
+  display: none;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 100%;
+  background-color: greenyellow;
+  content: "";
+  transform: translateX(10px) rotate(-45deg);
+  transform-origin: left bottom;
+}
+
+#return-cross-mark {
+  display: none;
+  height: 50px;
+  width: 50px;
+  border-radius: 5px;
+  position: relative;
+}
+
+#return-cross-mark:after {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  content: "\274c"; /* use the hex value here... */
+  font-size: 25px; 
+  color: #FFF;
+  line-height: 50px;
+  text-align: center;
+}

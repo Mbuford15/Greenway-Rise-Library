@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return Books</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="getData.js" defer></script>
+</head>
+
+<body>
+    <div id="return-all">
+        <img id="back-logo" class="img-top-left" src="stab-logo.png" alt="stab logo picture">
+        <div id="return-top">
+        </div>
+        <div id="return-body">
+            <div id="return-body-center">
+                <h2 id="return-title">Return Book</h2><br>
+                <div id="return-form-container">
+                    <form id="return-form">
+                        <label for="return-form-book-title">Book Title (Spell name correctly)</label><br>
+                        <input id="return-form-book-title" class="return-inputs" name="Book_Title" /><br>
+                        <label for="return-form-name-book">Full Name</label><br>
+                        <input id="return-form-name-book" class="return-inputs" name="Full Name" /><br>
+                        <input type="radio" id="return-radio" name="Status" value="InStock" checked="checked" />
+                        <br />       
+                    </form>
+                    <input id="returning-book-button" type="button" value="Return Book">
+                    <div id="return-tick-mark"></div>
+                    <div id="return-cross-mark"></div>
+                <!-- end of form div --></div>
+            <!-- end of return-body-center div --></div>
+        <!-- end of return-body div --></div>
+    <script>
+    // takes you page to the home page when clicked
+    document.getElementById("back-logo").addEventListener("click", ()=>{
+        location.href = "homepage.html"
+    })
+
+    // sends the data from the html form to the spreadsheet
+    function SubForm() {
+        $.ajax({
+            url: 'https://api.apispreadsheets.com/data/gcpeojQe6GyfvLZZ/',
+            type: 'post',
+            data: $("#return-form").serializeArray(),
+            // if we were able to connect to the api
+            success: function () {
+                resetForm()
+            },
+            // if we didnt connect to the api to input the data
+            error: function () {
+                alert("There was an error :(")
+            }
+        });
+    }
+    // initializes the form submission 
+    document.getElementById("returning-book-button").addEventListener("click", () => {
+        SubForm();
+        //returnedOrNot();
+    })
+    // resets the values in the input boxes for after the form is submitted
+    function resetForm() {
+        document.getElementById("return-form-book-title").value = "";
+        document.getElementById("return-form-name-book").value = "";
+    }
+    </script>
+</body>
+
+</html>
+
+<!--room number they got it from
+    check that the name and the student id match
+    return the book to where you got it -->
