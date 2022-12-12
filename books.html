@@ -40,8 +40,6 @@
                     <label for="checkbox-essay">Essay</label>
                     <input type="checkbox" name="genre" id="checkbox-medical" value="Medical">
                     <label for="checkbox-medical">Medical</label>
-                    <!-- <input type="checkbox" id="checkbox-historical-fiction" value="Historical Fiction">
-          <label for="checkbox-historicalFiction">Historical Fiction</label> -->
                     <!-- end of genre-div div -->
                 </div>
                 <!-- end of books-search div -->
@@ -55,7 +53,11 @@
         <!-- end of books-all div -->
     </div>
 
+
     <!-- because of the autofill and the need to ge the data from a spreadsheet we decided to combine the pages into and ajax website so we could only ask for the information once -->
+   
+
+    <!-- check out page html -->
     <div id="check-out-all">
         <div id="check-out-top">
             <img id="checkOut-stab-logo" class="img-top-left" src="stab-logo.png" alt="picture of stab's logo">
@@ -81,7 +83,11 @@
             </div>
             <!-- end of check-out-body div -->
         </div>
+
+        <!-- end of html-->
+
         <script type="text/javascript">
+
             // both takes you back to the home page when clicked
             document.getElementById("checkOut-stab-logo").addEventListener("click", () => {
                 location.href = "homepage.html"
@@ -90,6 +96,7 @@
                 location.href = "homepage.html"
             })
 
+            // send the data for checking out a book to the spreadsheet
             document.getElementById("check-out-book-button").addEventListener("click", () => { SubForm() })
             function SubForm() {
                 $.ajax({
@@ -118,43 +125,26 @@
             // const externalHTML = `<input type='button' id="check-out-button" onclick="location.href = 'file:///Users/paul/Desktop/Coding/HSE//checkOut.html';" value='Check Out'>`;
             const externalHTML = `<input type='button' id="check-out-button" value=''>`;
 
+            // creates the button related to the book it is assigned to for checking out
             function makeButton(title) {
                 return button =  `<button onclick="showCheckOut()" class="check-out-button" value='` + title + `'>` + "Check Out" + `</button>`
             }
+            // when checking out a book it no longer shows the books and shows the checkout page
             function showCheckOut () { 
                 document.getElementById("book-all").style.display = "none"
                 document.getElementById("check-out-all").style.display = "grid"
             }
 
+            // allows us to add an event listener to elements added to the DOM
             $('body').on('click', '.check-out-button', function() {
                 console.log(1)
                 let fired_button = $(this).val();
                 document.getElementById("check-out-form-book-title").value = fired_button;
             });
-            
-
-            // the onclick counter part to this function is in the button
-            // function fillin(event) {
-            //     console.log(1)
-            //     document.getElementById("check-out-form-book-title").value = event.currentTarget.value;
-            // }
-
-            // for (var i = 0; i < btns.length; i++) {
-            //     btns[i].addEventListener("click", function () {
-            //         document.getElementById("book-all").style.display = "none"
-            //         document.getElementById("check-out-all").style.display = "grid"
-            //         document.getElementById("check-out-form-book-title").value = btns[i].value;
-            //     })
-            // }
-
-            $(".check-out-button").click(function () {
-                document.getElementById("book-all").style.display = "none"
-                document.getElementById("check-out-all").style.display = "grid"
-                document.getElementById("check-out-form-book-title").value = $(this).val();
-            });
 
             var spreadSheet;
             var books = [];
+            // gets the data from the spreadsheet
             function getData() {
                 fetch("https://api.apispreadsheets.com/data/gcpeojQe6GyfvLZZ/").then(res => {
                     if (res.status === 200) {
@@ -174,7 +164,8 @@
                     }
                 })
             }
-
+            
+            // creates the new array of books to be displayed when a checkbox is checked or search is inputed
             function createNewArray(datas) {
                 for (let i = 0; i < datas.data.length; i++) {
                     books.push(datas.data[i].Book_Title, datas.data[i].Author, datas.data[i].Summary, datas.data[i].Genre)
@@ -270,8 +261,4 @@
             }
         </script>
 </body>
-
 </html>
-
-
-<!-- search by status -->
