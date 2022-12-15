@@ -1,4 +1,6 @@
 var yourData;
+// gets the data from the spreadsheet
+// is currently being used as a back up just incase something breaks with the main one from altering it
 function getData () {
     fetch("https://api.apispreadsheets.com/data/gcpeojQe6GyfvLZZ/").then(res => {
         if (res.status === 200) {
@@ -16,13 +18,6 @@ function getData () {
     })
 }
 
-// books.js -----------------------------------------------------------------------------
-// checkboxes, enabledSettings, menu varaible names are global
-
-
-// return ---------------------------------------------------------------------------------
-
-// getting data from the form -----------------------------------------------------------------------------------
 
 
 
