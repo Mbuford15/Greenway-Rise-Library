@@ -120,11 +120,6 @@
                 document.getElementById("check-out-form-name-book").value = "";
             }
 
-            //================================================================
-            const externalHTMLs = '<a id="check-out-button" href="checkOut.html">Check Out</a>'
-            // const externalHTML = `<input type='button' id="check-out-button" onclick="location.href = 'file:///Users/paul/Desktop/Coding/HSE//checkOut.html';" value='Check Out'>`;
-            const externalHTML = `<input type='button' id="check-out-button" value=''>`;
-
             // creates the button related to the book it is assigned to for checking out
             function makeButton(title) {
                 return button =  `<button onclick="showCheckOut()" class="check-out-button" value='` + title + `'>` + "Check Out" + `</button>`
