@@ -1,3 +1,5 @@
+// rather than linking the jquery we chose to put all of the functions into a js file and link it 
+
 /*!
  * jQuery JavaScript Library v3.3.1
  * https://jquery.com/
