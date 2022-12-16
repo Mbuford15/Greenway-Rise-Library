@@ -3,7 +3,7 @@
 function removeDuplicates() {
  var sheet = SpreadsheetApp.getActiveSheet();
  //pulls all book data from spreadsheet
- var rng_all = sheet.getRange("A1:P100");
+ var rng_all = sheet.getRange("A1:200");
  var data_all = rng_all.getValues();
  var newData = new Array();
 
@@ -16,7 +16,7 @@ function removeDuplicates() {
 
     for(j in newData){
 
-      if(data_all[i][0] == newData[j][0]){
+      if(data_all[i][0].toLowerCase() == newData[j][0].toLowerCase()){
         //console.log(newData[j][13])
        //checks if total books matches avaliable books 
 
@@ -27,10 +27,14 @@ function removeDuplicates() {
           if(newData[j][12] != 0){
 
             if(data_all[i][15] == "InStock" ){
-
+              
               //newData[j].splice(14,1,newData[j][14] - data_all[i][14])
 
-              newData[j][14] = newData[j][14].replace(data_all[i][14], "")
+
+              
+              
+              newData[j][14] = newData[j][14].toLowerCase().replace(data_all[i][14].toLowerCase(), "")
+              
 
               newData[j][14] = newData[j][14].replace(", ", "")
               //console.log(newData[j][14].replace(data_all[i][14], "i"))
@@ -42,12 +46,12 @@ function removeDuplicates() {
           if(newData[j][12] != newData[j][13]){
 
             if(data_all[i][15] == "Check_out" ){    
-
+              console.log(data_all[i][0].toLowerCase())
               console.log(1)
               if(newData[j][12] == 0){
-                newData[j].splice(14,1,newData[j][14] + data_all[i][14])               
+                newData[j].splice(14,1,newData[j][14].toLowerCase() + data_all[i][14].toLowerCase())               
               } else{
-                newData[j].splice(14,1,newData[j][14] + ", " + data_all[i][14])
+                newData[j].splice(14,1,newData[j][14].toLowerCase() + ", " + data_all[i][14].toLowerCase())
               }
               
               newData[j][12] = newData[j][12] + 1
@@ -61,14 +65,14 @@ function removeDuplicates() {
 
         duplicate = true;
     
-      }
+      } 
 
     }
 
     //deletes form data after replacing book status and name of person
 
     if(!duplicate){
-     newData.push(col);
+     newData.push(data_all[i]);
 
     }
   }
@@ -78,5 +82,4 @@ function removeDuplicates() {
  sheet.getRange(1,1, newData.length, 
  newData[0].length).setValues(newData);
 }
-
 
