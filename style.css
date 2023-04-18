@@ -3,9 +3,17 @@ html, body {
     width: 100%;
     padding: 0%;
     margin: 0%;
-    background-color: #793140;
+    background-color: #7f3443;
     font-family: Arial, Helvetica, sans-serif;
   }
+  .pointer {
+    cursor: pointer;  
+  }
+
+  .i-pointer {
+    cursor: text;
+  }
+
   a{
     padding: 3px;
     color: white;
@@ -19,21 +27,62 @@ html, body {
     border-color: gold; 
     /* used for the books thing */
   }
-  
    /* the image that takes you back to the homepage on the books, checkout, and return pages*/
   .img-top-left:hover {
     cursor: pointer;
   }
 
+  select::-webkit-scrollbar {
+    display: none;
+  }
 /* front page css ---------------------------------------------------------------------*/
 
+  #title-front-div {
+    float: left;
+    top: 25vh;
+    color: white;
+    font-size: 500%;
+  }
+  #front-page-title {
+    font-size: 12vw;
+    word-spacing: 100vw; 
+  }
+
+  .front-redirections {
+    position: absolute;
+    background-color: white;
+    opacity: 75%;
+    color: maroon;
+    border-color: maroon;
+    font-size: 1.1vw;
+    top: 65vh;
+    width: 11vw;
+    height: 10vh;
+  }
+
+  .front-redirections:hover {
+    background-color: lightblue;
+    color: white;
+    border-color: white;
+  }
+
+
+  #front-see-books {
+    left: 55vw;
+  }
+
+  #front-return-books {
+    left: 70vw;
+  }
+
+
+/* 
   #all-front-div {
    display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 50px 150px 300px;
   }
   #title-front-div {
-  /*   background-color:red; */
     grid-row: 2/3;
     grid-column: 1/2;
     display: grid;
@@ -41,18 +90,22 @@ html, body {
     grid-template-columns: 1fr 400px 1fr;
   }
   #front-page-title {
-  /*   background-color: green;  */
-    justify-self: center;
+    top: 25%;
+    font-size: 500%;
     bottom: 50px;
     grid-row: 1/2;
     grid-column: 2/3;
     color: #ebebeb;
   }
-  a:link {
+  #redirections-front input {
     background-color: #7f3443;
     text-decoration: none;
-    border: 1px black solid;
-    color: black;
+    border: 1px white solid;
+    color: white;
+    padding:0px;
+    margin-left: 15px;
+    margin-right: 10px;
+
   }
   #contains-redirections-front-div { 
     display: grid;
@@ -73,11 +126,14 @@ html, body {
     color: white;
   }
   #redirections-front {
-  /*   background-color: yellow;  */
     grid-row: 1/2;
     grid-column: 2/3;
-  }
+  } */
 /* All Books Page -------------------------------------------------------------------------------- */
+  #books-topBar {
+    position: sticky;
+  }
+
   #book-all {
     display: grid;
     grid-template-columns: 1fr;
@@ -157,7 +213,7 @@ html, body {
 /* Check Out Books Page -------------------------------------------------------------------- */
 
 #check-out-all {
-  display: none;
+  display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 100px 1fr;
 }
@@ -336,6 +392,29 @@ text-align: center;
     height: 25px;
   }
 
+  #return-drop-down {
+    display: none;
+    position: absolute;
+    border: 1px solid white;
+    border-top: none;
+    background-color: #793140;
+    outline: none;
+    color: white;
+    margin-bottom: 20px;
+    padding-right: 20px;
+    width: 30.4vw;
+  }
+  
+  #return-drop-down option {
+    margin-top: 5px;
+    background: transparent;
+    
+  }
+
+  #return-form-name-label {
+    margin-top: 5px;
+  }
+
   #return-radio {
     display: none;
   }
@@ -406,3 +485,30 @@ text-align: center;
   line-height: 50px;
   text-align: center;
 }
+
+/* See Checked Out Page ----------------------------------------------------------------------------------- */
+
+#nav-bar {
+  background-color: white;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+
+}
+
+#nav-bar li {
+  cursor: pointer;
+}
+
+.nav-bar-item {
+  margin: 20px;
+}
+
+.nav-bar-highlight {
+  padding: 10px;
+}
+
+.nav-bar-highlight:hover {
+  background-color: lightblue;
+}
+
