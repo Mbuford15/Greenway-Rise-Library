@@ -8,26 +8,51 @@
   <meta name="description" content="STAB Library">
   <meta name="description" content="Saints Library">
   <meta name="description" content="STAB Greenway Rise Library">
+  <meta name="msapplication-TitleImage" conetent="stab-logo.png">
   <title>Green Way Rise Books</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
-  <script src="getData.js" defer></script>
+  <script src="jquery-3.3.1copy.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body style="    background-image: url('Greenway\ Rise\ Photo.jpg');
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;">
+
   <div id="all-front-div">
     <div id="title-front-div">
       <h1 id="front-page-title">Greenway Rise Library</h1>
       <!-- end of title div --></div>
     <div id="contains-redirections-front-div">
       <div id="redirections-front">
-        <a id="front-link-left" href="books.html" id="front-see-books">See Available Books</a>
-        <a id="front-link-right" href="return.html" id="front-return-books">Return Books</a>
+        <input type="button" id="front-see-books" class="front-redirections pointer" value="See Available Books">
+        <input type="button" id="front-return-books" class="front-redirections pointer" value="Return Books">
         <!-- end of redirections div --></div>
       <!-- end of contains-redirections div --></div>
       <div id="rules-div">
         <!-- <h3>Rules and Honor Code</h3> -->
       <!-- end of rules div--></div>
     <!-- end of all-front div --></div>
+ 
+
+
+      <script type="text/javascript">
+
+        // sends the user to the books page when the book button is clicked
+        document.getElementById("front-see-books").addEventListener("click", ()=> {
+            location.href = "books.html"
+        })
+
+        // sends the user to the return page when that button is pressured
+        document.getElementById("front-return-books").addEventListener("click", () => {
+            location.href = "return.html"
+        })
+
+// -------------------------------------------------------------------------------------------
+
+    </script>
 </body>
 
 </html>
