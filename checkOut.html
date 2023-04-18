@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checking Out Book</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+</head>
+<body onload="autoFill()">
+    <div id="check-out-all">
+    <div id="check-out-top">
+        <img id="checkOut-stab-logo" class="img-top-left" src="stab-logo.png" alt="picture of stab's logo">
+    </div>
+    <div id="check-out-body">
+        <div id="check-out-body-center">
+            <h2 id="check-out-title">Check Out</h2><br>
+            <div id="check-out-form-container">
+                <form id="check-out-form">
+                    <label for="check-out-form-book-title">Book Title</label><br>
+                    <input id="check-out-form-book-title" class="check-out-inputs i-pointer" name="Book_Title" /><br>
+                    <label for="check-out-form-name-book">Full Name</label><br>
+                    <input id="check-out-form-name-book" class="check-out-inputs i-pointer" name="Full Name" /><br>
+                    <input type="radio" id="check-out-radio" name="Status" value="Check_out" checked="checked" />
+                    <br />
+                </form>
+                <input id="check-out-book-button" class="pointer" type="button" value="Check Out Book">
+                <div id="check-out-tick-mark"></div>
+                <div id="check-out-cross-mark"></div>
+                <!-- end of form div -->
+            </div>
+            <!-- end of check-out-body-center div -->
+        </div>
+        <!-- end of check-out-body div -->
+    </div>
+</div><!-- end of check out all div-->
+<script>
+
+    //  takes you back to the home page when clicked
+    document.getElementById("checkOut-stab-logo").addEventListener("click", () => {
+        location.href = "index.html"
+    })
+
+    // gets the data and outfills the book you want to check out
+    function autoFill() {
+        if (typeof localStorage.getItem("checkOutBook") !== null) {
+            document.getElementById("check-out-form-book-title").value = localStorage.getItem("checkOutBook")
+        }
+    }
+
+    document.getElementById("check-out-book-button").addEventListener("click", () => {SubForm()})
+     // send the data for checking out a book to the spreadsheet
+     document.getElementById("check-out-book-button").addEventListener("click", () => { SubForm() })
+        function SubForm() {
+            $.ajax({
+                url: 'https://api.apispreadsheets.com/data/gcpeojQe6GyfvLZZ/',
+                type: 'post',
+                data: $("#check-out-form").serializeArray(),
+                // if we were able to connect to the api
+                success: function () {
+                    resetForm()
+                },
+                // if we didnt connect to the api to input the data
+                error: function () {
+                    alert("There was an error :(")
+                }
+            });
+        }
+
+        // clears the form when checking a book out
+        function resetForm() {
+            document.getElementById("check-out-form-book-title").value = "";
+            document.getElementById("check-out-form-name-book").value = "";
+        }
+    </script>
+</body>
+</html>
