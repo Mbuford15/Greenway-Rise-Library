@@ -8,10 +8,9 @@
     <link href="style.css" rel="stylesheet" type="text/css" />
     <script src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-    <script src="getData.js" defer></script>
 </head>
 
-<body>
+<body onload="getData()">
     <div id="return-all">
         <img id="back-logo" class="img-top-left" src="stab-logo.png" alt="stab logo picture">
         <div id="return-top">
@@ -22,13 +21,15 @@
                 <div id="return-form-container">
                     <form id="return-form">
                         <label for="return-form-book-title">Book Title (Spell name correctly)</label><br>
-                        <input id="return-form-book-title" class="return-inputs" name="Book_Title" /><br>
-                        <label for="return-form-name-book">School Email</label><br>
-                        <input id="return-form-name-book" class="return-inputs" name="School Email" /><br>
-                        <input type="radio" id="return-radio" name="Last_Action" value="Returned" checked="checked" />
+                        <input id="return-form-book-title" class="return-inputs i-pointer" name="Book_Title" /><br>
+                        <select id="return-drop-down" size="4">
+                        </select>
+                        <label id="return-form-name-label" for="return-form-name-book">Full Name (First and Last)</label><br>
+                        <input id="return-form-name-book" class="return-inputs i-pointer" name="Full Name" /><br>
+                        <input type="radio" id="return-radio" name="Status" value="InStock" checked="checked" />
                         <br />       
                     </form>
-                    <input id="returning-book-button" type="button" value="Return Book">
+                    <input id="returning-book-button" class="pointer" type="button" value="Return Book">
                     <div id="return-tick-mark"></div>
                     <div id="return-cross-mark"></div>
                 <!-- end of form div --></div>
@@ -38,8 +39,89 @@
     // takes you page to the home page when clicked
     document.getElementById("back-logo").addEventListener("click", ()=>{
         location.href = "index.html"
+    });
+
+    // displays the drop down when an input is inputed
+    document.getElementById("return-form-book-title").addEventListener("input", ()=>{
+        displayDropDown();
+        document.getElementById("return-drop-down").style.display = "grid"
+        document.getElementById("return-form-book-title").style.marginBottom = "0px"
+    });
+
+    // checks if we have the json data from the spreadsheet so we dont call it over and over again
+    function isDataHere () {
+        if (typeof(localStorage.getItem("spread-sheet"))!='undefined') {
+            console.log(1)
+            getData();
+        } else {
+            console.log(2)
+            spreadSheet = JSON.parse(localStorage.getItem("spread-sheet"));
+        }
+    }
+
+    // displays the drop down and changes the items in the drop down
+    function displayDropDown () {
+        document.getElementById("return-drop-down").innerHTML = ""
+        let s = document.getElementById("return-form-book-title").value;
+        for (let i = 0; i < spreadSheet.data.length; i++) {
+            if (spreadSheet.data[i].Book_Title.toLowerCase().includes(s)) {
+                console.log(1)
+                document.getElementById("return-drop-down").innerHTML = document.getElementById("return-drop-down").innerHTML + "<option>"+ spreadSheet.data[i].Book_Title + "</option>"
+            }
+        }
+    }
+
+    //  changes the value of the input to the book title clicked on
+    $('body').on('change', 'select', function() {
+        let fired_button = $(this).val();
+        document.getElementById("return-form-book-title").value = fired_button;
+        document.getElementById("return-drop-down").style.display = "none";
+        document.getElementById("return-form-book-title").style.marginBottom = "5px"
+    });
+
+        //  hides the select drop down when it is clicked off of 
+    // $('body').on('blur', 'select', function() {
+    //     document.getElementById("return-drop-down").style.display = "none"
+    //     document.getElementById("return-form-book-title").style.marginBottom = "0px"
+    // });
+
+    // hides the drop down when it is clicked off of 
+    document.getElementById("return-drop-down").addEventListener("blur", ()=> {
+        document.getElementById("return-drop-down").style.display = "none";
+        document.getElementById("return-form-book-title").style.marginBottom = "5px"
     })
 
+    // checks if the data is already in local storage
+    function isDataHere () {
+        if (typeof(localStorage.getItem("spread-sheet"))!='undefined') {
+            console.log(1)
+            getData();
+        } else {
+            spreadSheet = JSON.parse(localStorage.getItem("spread-sheet"));
+        }
+    }
+
+    var spreadSheet;
+    var books = [];
+    // gets the data from the spreadsheet
+    function getData() {
+        fetch("https://api.apispreadsheets.com/data/32PjRgplNbwQEvHy/").then(res => {
+            if (res.status === 200) {
+                //SUCCESS
+                // https://plainenglish.io/blog/how-to-store-json-data-in-local-storage-js-react-angular
+                res.json().then(data => {
+                    localStorage.setItem("spread-sheet", JSON.stringify(data));
+                    spreadSheet = JSON.parse(localStorage.getItem("spread-sheet"));
+                }).catch(err => console.log(err))
+            }
+            else {
+                // ERROR
+                console.log("errorrrrrrr")
+            }
+        })
+    }
+             
+            
     // sends the data from the html form to the spreadsheet
     function SubForm() {
         $.ajax({
