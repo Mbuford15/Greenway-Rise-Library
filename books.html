@@ -11,7 +11,10 @@
     <script src="jquery-3.3.1copy.js"></script>
 </head>
 
-<body onload="getData()">
+<body onload="isDataHere()">
+    <div id="books-topBar">
+        
+    </div>
     <div id="book-all">
         <div id="books-top">
             <img id="books-stab-logo" class="img-top-left" src="stab-logo.png" alt="picture of stab's logo">
@@ -19,27 +22,27 @@
             <div id="books-search">
                 <div id="searching-div">
                     <label for="searching-for-books">Search For Available Books:</label>
-                    <input type="text" name="searchings" id="searching-for-books">
+                    <input type="text" name="searchings" class="i-pointer" id="searching-for-books">
                     <!-- end of searching-div div -->
                 </div><br>
                 <div id="genre-div">
-                    <input type="checkbox" name="genre" id="checkbox-fiction" value="Fiction">
-                    <label for="checkbox-fiction">Fiction</label>
-                    <input type="checkbox" name="genre" id="checkbox-nonfiction" value="Nonfiction">
-                    <label for="checkbox-nonfiction">Nonfiction</label>
-                    <input type="checkbox" name="genre" id="checkbox-science" value="Science">
-                    <label for="checkbox-science">Science</label>
-                    <input type="checkbox" name="genre" id="checkbox-horror" value="History">
-                    <label for="checkbox-horror">History</label>
-                    <input type="checkbox" name="genre" id="checkbox-biography/autobiography"
+                    <input type="checkbox" name="genre" class="pointer" id="checkbox-fiction" value="Fiction">
+                    <label for="checkbox-fiction" class="pointer">Fiction</label>
+                    <input type="checkbox" name="genre"class="pointer" id="checkbox-nonfiction" value="Nonfiction">
+                    <label for="checkbox-nonfiction" class="pointer">Nonfiction</label>
+                    <input type="checkbox" name="genre"class="pointer"  id="checkbox-science" value="Science">
+                    <label for="checkbox-science" class="pointer">Science</label>
+                    <input type="checkbox" name="genre" class="pointer" id="checkbox-horror" value="History">
+                    <label for="checkbox-horror" class="pointer">History</label>
+                    <input type="checkbox" name="genre" class="pointer" id="checkbox-biography/autobiography"
                         value="Biography/Autobiography">
-                    <label for="checkbox-biography/autobiography">Biography/Autobiography</label>
-                    <input type="checkbox" name="genre" id="checkbox-speech" value="Speech">
-                    <label for="checkbox-speech">Speech</label>
-                    <input type="checkbox" name="genre" id="checkbox-essay" value="Essay">
-                    <label for="checkbox-essay">Essay</label>
-                    <input type="checkbox" name="genre" id="checkbox-medical" value="Medical">
-                    <label for="checkbox-medical">Medical</label>
+                    <label for="checkbox-biography/autobiography" class="pointer">Biography/Autobiography</label>
+                    <input type="checkbox" name="genre" class="pointer" id="checkbox-speech" value="Speech">
+                    <label for="checkbox-speech" class="pointer">Speech</label>
+                    <input type="checkbox" name="genre" class="pointer" id="checkbox-essay" value="Essay">
+                    <label for="checkbox-essay" class="pointer">Essay</label>
+                    <input type="checkbox" name="genre" class="pointer" id="checkbox-medical" value="Medical">
+                    <label for="checkbox-medical" class="pointer">Medical</label>
                     <!-- end of genre-div div -->
                 </div>
                 <!-- end of books-search div -->
@@ -52,73 +55,32 @@
         </div>
         <!-- end of books-all div -->
     </div>
-
-
-    <!-- because of the autofill and the need to ge the data from a spreadsheet we decided to combine the pages into and ajax website so we could only ask for the information once -->
-   
-
-    <!-- check out page html -->
-    <div id="check-out-all">
-        <div id="check-out-top">
-            <img id="checkOut-stab-logo" class="img-top-left" src="stab-logo.png" alt="picture of stab's logo">
-        </div>
-        <div id="check-out-body">
-            <div id="check-out-body-center">
-                <h2 id="check-out-title">Check Out</h2><br>
-                <div id="check-out-form-container">
-                    <form id="check-out-form">
-                        <label for="check-out-form-book-title">Book Title</label><br>
-                        <input id="check-out-form-book-title" class="check-out-inputs" name="Book_Title" /><br>
-                        <label for="check-out-form-name-book">School Email</label><br>
-                        <input id="check-out-form-name-book" class="check-out-inputs" name="School Email" /><br>
-                        <input type="radio" id="check-out-radio" name="Last_Action" value="Check_out" checked="checked" />
-                        <br />
-                    </form>
-                    <input id="check-out-book-button" type="button" value="Check Out Book">
-                    <div id="check-out-tick-mark"></div>
-                    <div id="check-out-cross-mark"></div>
-                    <!-- end of form div -->
-                </div>
-                <!-- end of check-out-body-center div -->
-            </div>
-            <!-- end of check-out-body div -->
-        </div>
-
         <!-- end of html-->
 
         <script type="text/javascript">
+            var spreadSheet;
+            var books = [];
 
             // both takes you back to the home page when clicked
-            document.getElementById("checkOut-stab-logo").addEventListener("click", () => {
-                location.href = "index.html"
-            })
             document.getElementById("books-stab-logo").addEventListener("click", () => {
                 location.href = "index.html"
             })
 
-            // send the data for checking out a book to the spreadsheet
-            document.getElementById("check-out-book-button").addEventListener("click", () => { SubForm() })
-            function SubForm() {
-                $.ajax({
-                    url: 'https://api.apispreadsheets.com/data/32PjRgplNbwQEvHy/',
-                    type: 'post',
-                    data: $("#check-out-form").serializeArray(),
-                    // if we were able to connect to the api
-                    success: function () {
-                        resetForm()
-                    },
-                    // if we didnt connect to the api to input the data
-                    error: function () {
-                        alert("There was an error :(")
-                    }
-                });
+            function isDataHere () {
+                if (typeof(localStorage.getItem("spread-sheet"))!='undefined') {
+                    console.log(1)
+                    getData();
+                } else {
+                    spreadSheet = JSON.parse(localStorage.getItem("spread-sheet"));
+                    createNewArray(spreadSheet);
+                    display();
+                }
             }
 
-            // clears the form when checking a book out
-            function resetForm() {
-                document.getElementById("check-out-form-book-title").value = "";
-                document.getElementById("check-out-form-name-book").value = "";
-            }
+            //================================================================
+            const externalHTMLs = '<a id="check-out-button" href="checkOut.html">Check Out</a>'
+            // const externalHTML = `<input type='button' id="check-out-button" onclick="location.href = 'file:///Users/paul/Desktop/Coding/HSE//checkOut.html';" value='Check Out'>`;
+            const externalHTML = `<input type='button' id="check-out-button" value=''>`;
 
             // creates the button related to the book it is assigned to for checking out
             function makeButton(title) {
@@ -129,28 +91,25 @@
                 document.getElementById("book-all").style.display = "none"
                 document.getElementById("check-out-all").style.display = "grid"
             }
-
+            
             // allows us to add an event listener to elements added to the DOM
             $('body').on('click', '.check-out-button', function() {
                 console.log(1)
                 let fired_button = $(this).val();
-                document.getElementById("check-out-form-book-title").value = fired_button;
+                localStorage.setItem("checkOutBook", fired_button);  
+                location.href = "checkOut.html"
             });
 
-            var spreadSheet;
-            var books = [];
             // gets the data from the spreadsheet
             function getData() {
-                fetch("https://api.apispreadsheets.com/data/gcpeojQe6GyfvLZZ/").then(res => {
+                fetch("https://api.apispreadsheets.com/data/32PjRgplNbwQEvHy/").then(res => {
                     if (res.status === 200) {
                         //SUCCESS
                         res.json().then(data => {
-                            console.log(data)
-                            spreadSheet = data;
+                            localStorage.setItem("spread-sheet", JSON.stringify(data));
+                            spreadSheet = JSON.parse(localStorage.getItem("spread-sheet"));
+                            createNewArray(spreadSheet);
                             display();
-                            createNewArray(data);
-                            //console.log(data.data[1].Book_Title)
-
                         }).catch(err => console.log(err))
                     }
                     else {
@@ -254,6 +213,11 @@
                 }
                 display()
             }
+            
         </script>
 </body>
+
 </html>
+
+
+<!-- search by status -->
