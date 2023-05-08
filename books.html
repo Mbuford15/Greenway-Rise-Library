@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width">
     <title>Books</title>
     <link href="style.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="stab-logo.png">
     <script src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="jquery-3.3.1copy.js"></script>
@@ -15,13 +16,22 @@
     <div id="books-topBar">
         
     </div>
+    <div id="global-navbar">
+        <ul id="nav-bar">
+            <li><a href="index.html"><img id="nav-bar-home-img" src="navBarHomePageImg.png" alt="Home Page Image Button" width="30px" height="30px"></a></li>
+            <li class="nav-bar-item nav-bar-highlight" id="nav-bar-search-books"><a href="books.html">Search Availible Books</a></li>
+            <li class="nav-bar-item nav-bar-highlight" id="nav-bar-return-books"><a href="return.html">Return Books</a></li>
+            <li class="nav-bar-item nav-bar-highlight" id="nav-bar-see-checked-out"><a href="checkedOutBooks.html">Books Currently Checked Out</a></li>
+            <li class="nav-bar-item nav-bar-highlight">Contact Us</li>
+            <li id="nav-bar-instagram" class="nav-bar-item"> <a href="https://www.instagram.com/st.annesbelfield/?hl=en" target="_blank" rel="noopener noreferrer"><img src="instagramImage.png" alt="Instagram Logo Image" width="50px" height="50px"></a></li>
+        </ul>
+    </div>
     <div id="book-all">
         <div id="books-top">
-            <img id="books-stab-logo" class="img-top-left" src="stab-logo.png" alt="picture of stab's logo">
             <h1 id="books-title">All Available Books</h1>
             <div id="books-search">
                 <div id="searching-div">
-                    <label for="searching-for-books">Search For Available Books:</label>
+                    <label for="searching-for-books">Search For Available Books:</label><br><br>
                     <input type="text" name="searchings" class="i-pointer" id="searching-for-books">
                     <!-- end of searching-div div -->
                 </div><br>
@@ -61,11 +71,7 @@
             var spreadSheet;
             var books = [];
 
-            // both takes you back to the home page when clicked
-            document.getElementById("books-stab-logo").addEventListener("click", () => {
-                location.href = "index.html"
-            })
-
+            // checks if the spread sheet data is already in local storage so we dont send as many requests
             function isDataHere () {
                 if (typeof(localStorage.getItem("spread-sheet"))!='undefined') {
                     console.log(1)
@@ -102,7 +108,7 @@
 
             // gets the data from the spreadsheet
             function getData() {
-                fetch("https://api.apispreadsheets.com/data/32PjRgplNbwQEvHy/").then(res => {
+                fetch("https://api.apispreadsheets.com/data/eksihvfg6DJsWlvl/").then(res => {
                     if (res.status === 200) {
                         //SUCCESS
                         res.json().then(data => {
@@ -122,10 +128,10 @@
             // creates the new array of books to be displayed when a checkbox is checked or search is inputed
             function createNewArray(datas) {
                 for (let i = 0; i < datas.data.length; i++) {
-                    books.push(datas.data[i].Book_Title, datas.data[i].Author, datas.data[i].Summary, datas.data[i].Genre)
+            
+                        books.push(datas.data[i].Book_Title, datas.data[i].Author, datas.data[i].Summary, datas.data[i].Genre, datas.data[i].Room, datas.data[i].Shelf)
                 }
-                console.log(books.length, books, books[0])
-                console.log(books[0].toLowerCase().includes("a"))
+            
             }
 
             // displays all books on the page when the page first loads
@@ -134,9 +140,9 @@
                 document.getElementById("div-books").innerHTML = "";
                 for (let i = 0; i < spreadSheet.data.length; i++) {
                     if (i < spreadSheet.data.length - 2) {
-                        document.getElementById("div-books").innerHTML = document.getElementById("div-books").innerHTML + "<h3>" + spreadSheet.data[i].Book_Title + "</h3><p>" + spreadSheet.data[i].Author + "</p><p>" + spreadSheet.data[i].Summary + "</p><br>" + makeButton(spreadSheet.data[i].Book_Title) + "<hr>";
+                        document.getElementById("div-books").innerHTML = document.getElementById("div-books").innerHTML + "<h3>" + spreadSheet.data[i].Book_Title + "</h3><p>" + spreadSheet.data[i].Author + "</p><p>" + spreadSheet.data[i].Summary + "</p>" + "<p>Check Out Copy In Room: " + spreadSheet.data[i].Room + "<br>On Self: " + spreadSheet.data[i].Shelf + "</p></br>" + makeButton(spreadSheet.data[i].Book_Title) + "<hr>";
                     } else {
-                        document.getElementById("div-books").innerHTML = document.getElementById("div-books").innerHTML + "<h3>" + spreadSheet.data[i].Book_Title + "</h3><p>" + spreadSheet.data[i].Author + "</p><p>" + spreadSheet.data[i].Summary + "</p><br>" + makeButton(spreadSheet.data[i].Book_Title);
+                        document.getElementById("div-books").innerHTML = document.getElementById("div-books").innerHTML + "<h3>" + spreadSheet.data[i].Book_Title + "</h3><p>" + spreadSheet.data[i].Author + "</p><p>" + spreadSheet.data[i].Summary + "</p>" + "<p>Check Out Copy In Room: " + spreadSheet.data[i].Room + "<br>On Self: " + spreadSheet.data[i].Shelf + "</p></br>" + makeButton(spreadSheet.data[i].Book_Title);
                     }
                 }
             }
@@ -148,9 +154,9 @@
             document.getElementById("searching-for-books").oninput = () => {
                 let search = document.getElementById("searching-for-books").value;
                 var results = [];
-                for (let i = 0; i < books.length; i += 4) {
+                for (let i = 0; i < books.length; i += 6) {
                     if (books[i].toLowerCase().includes(search.toLowerCase()) || books[i + 1].toLowerCase().includes(search.toLowerCase()) || books[i + 2].toLowerCase().includes(search.toLowerCase())) {
-                        results.push(books[i], books[i + 1], books[i + 2]);
+                        results.push(books[i], books[i + 1], books[i + 2], books[i + 3], books[i + 4], books[i + 5]);
                     }
                 }
                 // updates the page to display books that match the search
@@ -162,13 +168,14 @@
             // in that array on the screen
             function updateSearching(results) {
                 document.getElementById("div-books").innerHTML = "";
-                for (let i = 0; i < results.length; i += 3) {
-                    if (i < results.length - 3) {
-                        document.getElementById("div-books").innerHTML = document.getElementById("div-books").innerHTML + "<h3>" + results[i] + "</h3><p>" + results[i + 1] + "</p><p>" + results[i + 2] + "</p><br>" + makeButton(results[i]) + "<hr>";
+                for (let i = 0; i < results.length; i += 6) {
+                    if (i < results.length - 6) {
+                        document.getElementById("div-books").innerHTML = document.getElementById("div-books").innerHTML + "<h3>" + results[i] + "</h3><p>" + results[i + 1] + "</p><p>" + results[i + 2] + "<br><br> Check Out Copy In Room: " + results[i + 4] + "<br>On Self: "+ results[i + 5] + "</p><br>" + makeButton(results[i]) + "<hr>";
                     } else {
-                        document.getElementById("div-books").innerHTML = document.getElementById("div-books").innerHTML + "<h3>" + results[i] + "</h3><p>" + results[i + 1] + "</p><p>" + results[i + 2] + "</p>" + makeButton(results[i]);
+                        document.getElementById("div-books").innerHTML = document.getElementById("div-books").innerHTML + "<h3>" + results[i] + "</h3><p>" + results[i + 1] + "</p><p>" + results[i + 2]  + "<br><br> Check Out Copy in Room: " + results[i + 4] + "<br>On Self: "+ results[i + 5] + "</p><br>" + makeButton(results[i]);
                     }
                 }
+                document.getElementById("div-books").scrollTop = 0;
             }
 
             // Select all checkboxes with the name 'genre' using querySelectorAll.
@@ -201,10 +208,10 @@
             function limitGenre(enabledSettings) {
                 var arr = []
                 if (enabledSettings.length > 0) {
-                    for (let i = 0; i < books.length; i += 4) {
+                    for (let i = 0; i < books.length; i += 6) {
                         if (enabledSettings.includes(books[i + 3])) {
                             console.log(1)
-                            arr.push(books[i], books[i + 1], books[i + 2]);
+                            arr.push(books[i], books[i + 1], books[i + 2], books[i + 3], books[i + 4], books[i + 5]);
                             console.log(arr)
                         }
                     }
