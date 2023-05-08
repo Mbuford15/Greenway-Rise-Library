@@ -8,38 +8,47 @@
     <link href="style.css" rel="stylesheet" type="text/css" />
     <script src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-</head>
+    <style>
+        body {
+            background-color: rgb(37, 150, 190);
+        }
+    </style>
+    <link rel="icon" href="stab-logo.png">
+    </head>
 
-<body onload="getData()">
+<body onload="isDataHere()">
+      <div id="global-navbar">
+        <ul id="nav-bar">
+            <li><a href="index.html"><img id="nav-bar-home-img" src="navBarHomePageImg.png" alt="Home Page Image Button" width="30px" height="30px"></a></li>
+            <li class="nav-bar-item nav-bar-highlight" id="nav-bar-search-books"><a href="books.html">Search Availible Books</a></li>
+            <li class="nav-bar-item nav-bar-highlight" id="nav-bar-return-books"><a href="return.html">Return Books</a></li>
+            <li class="nav-bar-item nav-bar-highlight" id="nav-bar-see-checked-out"><a href="checkedOutBooks.html">Books Currently Checked Out</a></li>
+            <li class="nav-bar-item nav-bar-highlight">Contact Us</li>
+            <li id="nav-bar-instagram" class="nav-bar-item"> <a href="https://www.instagram.com/st.annesbelfield/?hl=en" target="_blank" rel="noopener noreferrer"><img src="instagramImage.png" alt="Instagram Logo Image" width="50px" height="50px"></a></li>
+        </ul>
+    </div>
     <div id="return-all">
-        <img id="back-logo" class="img-top-left" src="stab-logo.png" alt="stab logo picture">
-        <div id="return-top">
-        <!-- end of return top div--> </div>
         <div id="return-body">
             <div id="return-body-center">
                 <h2 id="return-title">Return Book</h2><br>
                 <div id="return-form-container">
                     <form id="return-form">
                         <label for="return-form-book-title">Book Title (Spell name correctly)</label><br>
-                        <input id="return-form-book-title" class="return-inputs i-pointer" name="Book_Title" /><br>
+                        <input id="return-form-book-title" class="return-inputs i-pointer" name="Book_Title" autocomplete="off" /><br>
                         <select id="return-drop-down" size="4">
                         </select>
                         <label id="return-form-name-label" for="return-form-name-book">School Email</label><br>
-                        <input id="return-form-name-book" class="return-inputs i-pointer" name="School Email" /><br>
+                        <input id="return-form-name-book" class="return-inputs i-pointer" name="School_Email" /><br>
                         <input type="radio" id="return-radio" name="Last_Action" value="Returned" checked="checked" />
                         <br />       
                     </form>
                     <input id="returning-book-button" class="pointer" type="button" value="Return Book">
-                    <div id="return-tick-mark"></div>
-                    <div id="return-cross-mark"></div>
+                    <div id="return-tick-mark-holder"><div id="return-tick-mark"></div></div>
+                    <div id="return-cross-mark-holder"><div id="return-cross-mark"></div></div>
                 <!-- end of form div --></div>
             <!-- end of return-body-center div --></div>
         <!-- end of return-body div --></div>
     <script>
-    // takes you page to the home page when clicked
-    document.getElementById("back-logo").addEventListener("click", ()=>{
-        location.href = "index.html"
-    });
 
     // displays the drop down when an input is inputed
     document.getElementById("return-form-book-title").addEventListener("input", ()=>{
@@ -66,7 +75,7 @@
         for (let i = 0; i < spreadSheet.data.length; i++) {
             if (spreadSheet.data[i].Book_Title.toLowerCase().includes(s)) {
                 console.log(1)
-                document.getElementById("return-drop-down").innerHTML = document.getElementById("return-drop-down").innerHTML + "<option>"+ spreadSheet.data[i].Book_Title + "</option>"
+                document.getElementById("return-drop-down").innerHTML = document.getElementById("return-drop-down").innerHTML + "<option>Room Number: "+ spreadSheet.data[i].Room + ":   " +spreadSheet.data[i].Book_Title + "</option>"
             }
         }
     }
@@ -105,7 +114,7 @@
     var books = [];
     // gets the data from the spreadsheet
     function getData() {
-        fetch("https://api.apispreadsheets.com/data/32PjRgplNbwQEvHy/").then(res => {
+        fetch("https://api.apispreadsheets.com/data/eksihvfg6DJsWlvl/").then(res => {
             if (res.status === 200) {
                 //SUCCESS
                 // https://plainenglish.io/blog/how-to-store-json-data-in-local-storage-js-react-angular
@@ -125,16 +134,17 @@
     // sends the data from the html form to the spreadsheet
     function SubForm() {
         $.ajax({
-            url: 'https://api.apispreadsheets.com/data/32PjRgplNbwQEvHy/',
+            url: 'https://api.apispreadsheets.com/data/eksihvfg6DJsWlvl/',
             type: 'post',
             data: $("#return-form").serializeArray(),
             // if we were able to connect to the api
             success: function () {
                 resetForm()
+                document.getElementById("return-body-center").innerHTML = document.getElementById("return-body-center").innerHTML + "Book has been successfully returned"
             },
             // if we didnt connect to the api to input the data
             error: function () {
-                alert("There was an error :(")
+                document.getElementById("return-body-center").innerHTML = document.getElementById("return-body-center").innerHTML + "Book has failed to be returned"
             }
         });
     }
