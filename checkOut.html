@@ -5,42 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checking Out Book</title>
     <link href="style.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="stab-logo.png">
     <script src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 </head>
 <body onload="autoFill()">
+    <div id="global-navbar">
+        <ul id="nav-bar">
+            <li><a href="index.html"><img id="nav-bar-home-img" src="navBarHomePageImg.png" alt="Home Page Image Button" width="30px" height="30px"></a></li>
+            <li class="nav-bar-item nav-bar-highlight" id="nav-bar-search-books"><a href="books.html">Search Availible Books</a></li>
+            <li class="nav-bar-item nav-bar-highlight" id="nav-bar-return-books"><a href="return.html">Return Books</a></li>
+            <li class="nav-bar-item nav-bar-highlight" id="nav-bar-see-checked-out"><a href="checkedOutBooks.html">Books Currently Checked Out</a></li>
+            <li class="nav-bar-item nav-bar-highlight">Contact Us</li>
+            <li id="nav-bar-instagram" class="nav-bar-item"> <a href="https://www.instagram.com/st.annesbelfield/?hl=en" target="_blank" rel="noopener noreferrer"><img src="instagramImage.png" alt="Instagram Logo Image" width="50px" height="50px"></a></li>
+        </ul>
+    </div>
     <div id="check-out-all">
-    <div id="check-out-top">
-        <img id="checkOut-stab-logo" class="img-top-left" src="stab-logo.png" alt="picture of stab's logo">
-    </div>
-    <div id="check-out-body">
-        <div id="check-out-body-center">
-            <h2 id="check-out-title">Check Out</h2><br>
-            <div id="check-out-form-container">
-                <form id="check-out-form">
-                    <label for="check-out-form-book-title">Book Title</label><br>
-                    <input id="check-out-form-book-title" class="check-out-inputs i-pointer" name="Book_Title" /><br>
-                    <label for="check-out-form-name-book">School Email</label><br>
-                    <input id="check-out-form-name-book" class="check-out-inputs i-pointer" name="School Email" /><br>
-                    <input type="radio" id="check-out-radio" name="Last_Action" value="Check_out" checked="checked" />
-                    <br />
-                </form>
-                <input id="check-out-book-button" class="pointer" type="button" value="Check Out Book">
-                <div id="check-out-tick-mark"></div>
-                <div id="check-out-cross-mark"></div>
-                <!-- end of form div -->
-            </div>
-            <!-- end of check-out-body-center div -->
-        </div>
-        <!-- end of check-out-body div -->
-    </div>
-</div><!-- end of check out all div-->
+        <div id="check-out-body">
+            <div id="check-out-body-center">
+                <h2 id="check-out-title">Check Out Book</h2><br>
+                <div id="check-out-form-container">
+                    <form id="check-out-form">
+                        <label for="check-out-form-book-title">Book Title (Spell name correctly)</label><br>
+                        <input id="check-out-form-book-title" class="check-out-inputs i-pointer" name="Book_Title" autocomplete="off" /><br>
+                        <label id="check-out-form-name-label" for="check-out-form-name-book">School Email</label><br>
+                        <input id="check-out-form-name-book" class="check-out-inputs i-pointer" name="School_Email" /><br>
+                        <input type="radio" id="check-out-radio" name="Last_Action" value="Check_out" checked="checked" />
+                        <br />       
+                    </form>
+                    <input id="check-out-book-button" class="pointer" type="button" value="Check Out">
+                    <div id="check-out-tick-mark"></div>
+                    <div id="check-out-cross-mark"></div>
+                <!-- end of form div --></div>
+            <!-- end of check-out-body-center div --></div>
+        <!-- end of check-out-body div --></div>
 <script>
-
-    //  takes you back to the home page when clicked
-    document.getElementById("checkOut-stab-logo").addEventListener("click", () => {
-        location.href = "index.html"
-    })
 
     // gets the data and outfills the book you want to check out
     function autoFill() {
@@ -49,21 +48,24 @@
         }
     }
 
-    document.getElementById("check-out-book-button").addEventListener("click", () => {SubForm()})
+    document.getElementById("check-out-book-button").addEventListener("click", ()=> {
+        SubForm()
+    })
      // send the data for checking out a book to the spreadsheet
-     document.getElementById("check-out-book-button").addEventListener("click", () => { SubForm() })
         function SubForm() {
             $.ajax({
-                url: 'https://api.apispreadsheets.com/data/32PjRgplNbwQEvHy/',
+                url: 'https://api.apispreadsheets.com/data/eksihvfg6DJsWlvl/',
                 type: 'post',
                 data: $("#check-out-form").serializeArray(),
                 // if we were able to connect to the api
                 success: function () {
                     resetForm()
+                    location.href = "index.html"
                 },
                 // if we didnt connect to the api to input the data
                 error: function () {
-                    alert("There was an error :(")
+                    alert("There was an error checking out the book")
+
                 }
             });
         }
