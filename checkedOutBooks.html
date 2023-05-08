@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checked Out Books</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="stab-logo.png">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="jquery-3.3.1copy.js"></script>
+</head>
+<body onload="isDataHere()">
+        <div id="global-navbar">
+            <ul id="nav-bar">
+            <li><a href="index.html"><img id="nav-bar-home-img" src="navBarHomePageImg.png" alt="Home Page Image Button" width="30px" height="30px"></a></li>
+            <li class="nav-bar-item nav-bar-highlight" id="nav-bar-search-books"><a href="books.html">Search Availible Books</a></li>
+            <li class="nav-bar-item nav-bar-highlight" id="nav-bar-return-books"><a href="return.html">Return Books</a></li>
+            <li class="nav-bar-item nav-bar-highlight" id="nav-bar-see-checked-out"><a href="checkedOutBooks.html">Books Currently Checked Out</a></li>
+            <li class="nav-bar-item nav-bar-highlight">Contact Us</li>
+            <li id="nav-bar-instagram" class="nav-bar-item"> <a href="https://www.instagram.com/st.annesbelfield/?hl=en" target="_blank" rel="noopener noreferrer"><img src="instagramImage.png" alt="Instagram Logo Image" width="50px" height="50px"></a></li>
+            </ul>
+        </div>
+        <br>
+        <div id="search-for-checked-out-books">
+            <h1 id="checkedOutBooksh1">Search For Your Checked Out Books</h1>
+            <div id="search-for-checked-out-books-search">
+            <label for="searching-for-checked-out-books">School Email: </label>
+            <input type="text" id="searching-for-checked-out-books">
+        </div>
+            <textarea id="users-checked-out-books" readonly>
+            
+            </textarea>
+        </div>
+    </div>
+    <script>
+
+    var spreadSheet;
+    // checks if the spread sheet data is already in local storage so we dont send as many requests
+    function isDataHere () {
+            if (typeof(localStorage.getItem("spread-sheet"))!='undefined') {
+                console.log(1)
+                getData();
+            } else {
+                spreadSheet = JSON.parse(localStorage.getItem("spread-sheet"));
+            }
+        }
+        // gets the spreadsheet data from the api and adds it to local storage
+        function getData() {
+        fetch("https://api.apispreadsheets.com/data/eksihvfg6DJsWlvl/").then(res => {
+            if (res.status === 200) {
+                //SUCCESS
+                // https://plainenglish.io/blog/how-to-store-json-data-in-local-storage-js-react-angular
+                res.json().then(data => {
+                    localStorage.setItem("spread-sheet", JSON.stringify(data));
+                    spreadSheet = JSON.parse(localStorage.getItem("spread-sheet"));
+                }).catch(err => console.log(err))
+            }
+            else {
+                // ERROR
+                console.log("errorrrrrrr")
+            }
+        })
+    }
+
+    // When the user presses enter or retunr the books they have checked out will be displayed
+    document.getElementById("searching-for-checked-out-books").addEventListener("keypress", ()=>{
+        if (event.key === "Enter") {
+            for (let i = 0; i < spreadSheet.data.length; i++) {
+                if (spreadSheet.data[i].School_Email.toLowerCase() == document.getElementById("searching-for-checked-out-books").value) {
+                    document.getElementById("users-checked-out-books").innerHTML = document.getElementById("users-checked-out-books").innerHTML + spreadSheet.data[i].Book_Title;
+                }
+            }
+        }
+    })
+    </script>
+</body>
+</html>
