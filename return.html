@@ -73,7 +73,7 @@
         document.getElementById("return-drop-down").innerHTML = ""
         let s = document.getElementById("return-form-book-title").value;
         for (let i = 0; i < spreadSheet.data.length; i++) {
-            if (spreadSheet.data[i].Book_Title.toLowerCase().includes(s)) {
+            if (spreadSheet.data[i].Book_Title.toLowerCase().includes(s.toLowerCase())) {
                 console.log(1)
                 document.getElementById("return-drop-down").innerHTML = document.getElementById("return-drop-down").innerHTML + "<option>Room Number: "+ spreadSheet.data[i].Room + ":   " +spreadSheet.data[i].Book_Title + "</option>"
             }
