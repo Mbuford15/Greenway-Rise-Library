@@ -589,6 +589,12 @@ text-align: center;
   overflow: scroll;
 }
 
+/* Contact Us */
+
+#contact-all {
+    background-color: white;
+}
+
 
 /* Nav Bar Styling ----------------------------------------------------------------------------------- */
 
